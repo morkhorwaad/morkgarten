@@ -16,12 +16,12 @@ export const query = graphql`
     query($garden: String!) {  
         allFile(filter: { 
             extension: { eq: "css" }, 
-              name:{ eq: $garden}}) {
-            edges {
-              node {
-                publicURL
-              }
+            name:{ eq: $garden}}) {
+          edges {
+            node {
+              publicURL
             }
           }
+        }
     }
 `

@@ -1,31 +1,43 @@
 const path = require(`path`)
+const { createFilePath } = require(`gatsby-source-filesystem`)
+
+exports.onCreateNode = ({ node, getNode, actions }) => {  
+  const { createNodeField } = actions  
+  if (node.sourceInstanceName === `gardens` && node.internal.type === `File`) {
+    const slug = createFilePath({ node, getNode, basePath: `pages` }) 
+    createNodeField({      
+      node,      
+      name: `slug`,      
+      value: slug,    
+    })  
+  }
+}
 
 exports.createPages = ({ graphql, actions }) => {
     const { createPage } = actions  
     return graphql(`
       {
-        allMarkdownRemark {
+        allFile(filter: { extension: { eq: "css" }}) {
           edges {
             node {
-              frontmatter {
-                path 
-                garden
+              fields {
+                slug
               }
+              name
             }
           }
         }
       }
     `).then(result => {
       console.log(result)
-      result.data.allMarkdownRemark.edges.forEach(
+      result.data.allFile.edges.forEach(
           ({ node }) => {      
-              console.log("Making a page at ", node.frontmatter.slug)
-              console.log("the garden is ", node.frontmatter.garden)
+            const slug = node.name === `index` ? `/` : node.fields.slug
               createPage({        
-                  path: node.frontmatter.path,        
+                  path: slug,        
                   component: path.resolve(`./src/templates/garden.js`),        
                   context: {                   
-                      garden: node.frontmatter.garden    
+                      garden: node.name  
                     },      
                 })    
             })  
