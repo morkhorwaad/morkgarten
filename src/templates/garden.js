@@ -1,14 +1,15 @@
 import React from "react"
 import Layout from "../components/layout"
+import Base from "../components/base"
 import StyleHelmet from "../components/styleHelmet"
 
 export default ({data}) => {
     const garden = data.allFile.edges[0].node.publicURL
     console.log("garden:", garden)
     return (
-        <Layout>
+        <Base>
             <StyleHelmet styleUrl={garden} />
-        </Layout>
+        </Base>
     )
 }
 

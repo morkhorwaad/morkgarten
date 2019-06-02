@@ -1,6 +1,24 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
+exports.onCreateWebpackConfig = ({
+  actions,
+}) => {
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.html$/,
+          loader: 'html-loader',
+          options: {
+            minimize: false,
+          },
+        },
+      ],
+    },
+  })
+}
+
 exports.onCreateNode = ({ node, getNode, actions }) => {  
   const { createNodeField } = actions  
   if (node.sourceInstanceName === `gardens` && node.internal.type === `File`) {
