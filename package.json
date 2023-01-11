@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "gatsby-source-filesystem": "^2.0.37",
-    "gatsby-transformer-remark": "^2.3.12",
+    "gatsby-transformer-remark": "^5.25.1",
     "html-loader": "^0.5.5",
     "prettier": "^1.17.1"
   },
